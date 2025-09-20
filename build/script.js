@@ -6,26 +6,23 @@ const border = 200;
 const X = 0;
 const Y = 1;
 const SPEED = 0.05;
+/* Green */
 const TOP_LEFT_COLOR = "#B8FFBF";
 const BOT_RIGHT_COLOR = "#004707";
+/* Hot Pink -> Purple */
+// const TOP_LEFT_COLOR = "#ff3f81";
+// const BOT_RIGHT_COLOR = "#23153c";
+/* Blue */
+// const TOP_LEFT_COLOR = "#B3E9FF";
+// const BOT_RIGHT_COLOR = "#0075A3";
+/* Red */
+// const TOP_LEFT_COLOR = "#FFB3B3";
+// const BOT_RIGHT_COLOR = "#A30000";
+/* Yellow */
+// const TOP_LEFT_COLOR = "#FFF2B3";
+// const BOT_RIGHT_COLOR = "#A38800";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const COLORS = [
-    "#135b46",
-    "#57c47a",
-    "#31704c",
-    "#246440",
-    "#3f9463",
-    "#42b792",
-    "#197a63",
-    "#286e4e",
-    "#498c41",
-    "#0a6c43",
-    "#355e1c",
-    "#125e28",
-    "#016d17",
-    "#207547"
-];
 // --- Geometry helpers ---
 function circumCircle(triangle) {
     const [ax, ay] = triangle[0].pos;
@@ -182,10 +179,10 @@ function drawCircle(point) {
     ctx.fill();
     ctx.stroke();
 }
-function drawLine(p1, p2) {
-    ctx.lineWidth = 0.5;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "black";
+function drawLine(p1, p2, color) {
+    ctx.lineWidth = 0.8;
+    // ctx.lineCap = "round";
+    ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.moveTo(p1.pos[X], p1.pos[Y]);
     ctx.lineTo(p2.pos[X], p2.pos[Y]);
@@ -206,6 +203,7 @@ function drawTriangle(p1, p2, p3) {
     ctx.lineTo(p3.pos[X], p3.pos[Y]);
     ctx.closePath();
     ctx.fill();
+    return color;
 }
 /**
  * Generate a random int from min to max
@@ -275,14 +273,14 @@ function main() {
             const point1 = triangle[0];
             const point2 = triangle[1];
             const point3 = triangle[2];
-            drawTriangle(point1, point2, point3);
-            drawLine(point1, point2);
-            drawLine(point2, point3);
-            drawLine(point1, point3);
+            const color = drawTriangle(point1, point2, point3);
+            drawLine(point1, point2, color);
+            drawLine(point2, point3, color);
+            drawLine(point1, point3, color);
         }
-        for (const point of points) {
-            drawCircle(point);
-        }
+        // for(const point of points){
+        // 	drawCircle(point);
+        // }
     }, 10);
 }
 main();

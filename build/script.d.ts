@@ -9,7 +9,6 @@ declare const TOP_LEFT_COLOR = "#B8FFBF";
 declare const BOT_RIGHT_COLOR = "#004707";
 declare const canvas: HTMLCanvasElement;
 declare const ctx: CanvasRenderingContext2D;
-declare const COLORS: string[];
 type Vector = [number, number];
 interface Point {
     pos: Vector;
@@ -50,8 +49,8 @@ declare function lerpColor(color1: string, color2: string, t: number): string;
 /** **********************/
 /** **********************/
 declare function drawCircle(point: Point): void;
-declare function drawLine(p1: Point, p2: Point): void;
-declare function drawTriangle(p1: Point, p2: Point, p3: Point): void;
+declare function drawLine(p1: Point, p2: Point, color: string): void;
+declare function drawTriangle(p1: Point, p2: Point, p3: Point): string;
 /**
  * Generate a random int from min to max
  *

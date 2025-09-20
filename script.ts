@@ -9,29 +9,28 @@ const Y = 1;
 
 const SPEED = 0.05;
 
+/* Green */
 const TOP_LEFT_COLOR = "#B8FFBF";
 const BOT_RIGHT_COLOR = "#004707";
 
+/* Hot Pink -> Purple */
+// const TOP_LEFT_COLOR = "#ff3f81";
+// const BOT_RIGHT_COLOR = "#23153c";
+
+/* Blue */
+// const TOP_LEFT_COLOR = "#B3E9FF";
+// const BOT_RIGHT_COLOR = "#0075A3";
+
+/* Red */
+// const TOP_LEFT_COLOR = "#FFB3B3";
+// const BOT_RIGHT_COLOR = "#A30000";
+
+/* Yellow */
+// const TOP_LEFT_COLOR = "#FFF2B3";
+// const BOT_RIGHT_COLOR = "#A38800";
+
 const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-
-const COLORS = [
-	"#135b46",
-	"#57c47a",
-	"#31704c",
-	"#246440",
-	"#3f9463",
-	"#42b792",
-	"#197a63",
-	"#286e4e",
-	"#498c41",
-	"#0a6c43",
-	"#355e1c",
-	"#125e28",
-	"#016d17",
-	"#207547"
-];
-
 
 type Vector = [number, number];
 
@@ -245,10 +244,10 @@ function drawCircle(point: Point): void {
 }
 
 
-function drawLine(p1: Point, p2: Point){
-	ctx.lineWidth = 0.5;
-	ctx.lineCap = "round";
-	ctx.strokeStyle = "black";
+function drawLine(p1: Point, p2: Point, color: string){
+	ctx.lineWidth = 0.8;
+	// ctx.lineCap = "round";
+	ctx.strokeStyle = color;
 
 	ctx.beginPath();
 	ctx.moveTo(p1.pos[X], p1.pos[Y]);
@@ -275,6 +274,8 @@ function drawTriangle(p1: Point, p2: Point, p3: Point){
 	ctx.lineTo(p3.pos[X], p3.pos[Y]);
 	ctx.closePath();
 	ctx.fill();
+	
+	return color;
 }
 
 
@@ -368,17 +369,17 @@ function main(){
 			const point1 = triangle[0];
 			const point2 = triangle[1];
 			const point3 = triangle[2];
-			drawTriangle(point1, point2, point3);
+			const color = drawTriangle(point1, point2, point3);
 
-			drawLine(point1, point2);
-			drawLine(point2, point3);
-			drawLine(point1, point3);
+			drawLine(point1, point2, color);
+			drawLine(point2, point3, color);
+			drawLine(point1, point3, color);
 
 		}
 
-		for(const point of points){
-			drawCircle(point);
-		}
+		// for(const point of points){
+		// 	drawCircle(point);
+		// }
 
 	}, 10);
 }

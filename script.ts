@@ -307,7 +307,7 @@ function main(){
 	const middleLeft: Point = { pos: [-border, bodySize[Y] / 2], vec: [0, 0], id: 3 };
 	const middleRight: Point = { pos: [bodySize[X] + border, bodySize[Y] / 2], vec: [0, 0], id: 4 };
 
-	const bottomLeft: Point = { pos: [-border, -border], vec: [0, 0], id: 5 };
+	const bottomLeft: Point = { pos: [-border, bodySize[Y]], vec: [0, 0], id: 5 };
 	const bottomMiddle: Point = { pos: [bodySize[X] / 2, -border], vec: [0, 0], id: 6 };
 	const bottomRight: Point = { pos: [bodySize[X] + border, bodySize[Y] + border], vec: [0, 0], id: 7 };
 

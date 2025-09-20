@@ -228,7 +228,7 @@ function main() {
     const topRight = { pos: [bodySize[X] + border, -border], vec: [0, 0], id: 2 };
     const middleLeft = { pos: [-border, bodySize[Y] / 2], vec: [0, 0], id: 3 };
     const middleRight = { pos: [bodySize[X] + border, bodySize[Y] / 2], vec: [0, 0], id: 4 };
-    const bottomLeft = { pos: [-border, -border], vec: [0, 0], id: 5 };
+    const bottomLeft = { pos: [-border, bodySize[Y]], vec: [0, 0], id: 5 };
     const bottomMiddle = { pos: [bodySize[X] / 2, -border], vec: [0, 0], id: 6 };
     const bottomRight = { pos: [bodySize[X] + border, bodySize[Y] + border], vec: [0, 0], id: 7 };
     points.push(topLeft, topMiddle, topRight, middleLeft, middleRight, bottomLeft, bottomMiddle, bottomRight);

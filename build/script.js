@@ -23,7 +23,12 @@ const BOT_RIGHT_COLOR = "#004707";
 // const BOT_RIGHT_COLOR = "#A38800";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-// --- Geometry helpers ---
+/**
+ * Creates a circle in the center of the given 3 points
+ *
+ * @param {Triangle} triangle
+ * @return {Circle}
+ */
 function circumCircle(triangle) {
     const [ax, ay] = triangle[0].pos;
     const [bx, by] = triangle[1].pos;
@@ -40,6 +45,13 @@ function circumCircle(triangle) {
     const dx = ax - ux, dy = ay - uy;
     return { x: ux, y: uy, r: Math.sqrt(dx * dx + dy * dy) };
 }
+/**
+ * Checks if a point lies within a circle
+ *
+ * @param {Point} point
+ * @param {Circle} circle
+ * @return {boolean}
+ */
 function inCircle(point, circle) {
     if (circle.r < 0)
         return false;
@@ -47,6 +59,13 @@ function inCircle(point, circle) {
     const dy = point.pos[Y] - circle.y;
     return dx * dx + dy * dy <= circle.r * circle.r;
 }
+/**
+ * Checks if an edge is equal to another
+ *
+ * @param {Edge} e1
+ * @param {Edge} e2
+ * @return {boolean}
+ */
 function edgeEqual(e1, e2) {
     return (e1[0].pos[X] === e2[0].pos[X] &&
         e1[0].pos[Y] === e2[0].pos[Y] &&
@@ -134,6 +153,12 @@ function wrap(value, min, max) {
         return value + max;
     return value;
 }
+/**
+ * Normalise a Vector
+ *
+ * @param {Vector} arr
+ * @return {Vector}
+ */
 function normalise(arr) {
     const xVec = arr[0];
     const yVec = arr[1];
@@ -146,9 +171,25 @@ function normalise(arr) {
     }
     return [xNormal, yNormal];
 }
+/**
+ * Generic Lerp function
+ *
+ * @param {number} a
+ * @param {number} b
+ * @param {number} t
+ * @return {RGBColorString}
+ */
 function lerp(a, b, t) {
     return a + (b - a) * t;
 }
+/**
+ * Lerps from color1 to color2
+ *
+ * @param {string} color1
+ * @param {string} color2
+ * @param {number} t
+ * @return {RGBColorString}
+ */
 function lerpColor(color1, color2, t) {
     const c1 = parseInt(color1.slice(1), 16);
     const c2 = parseInt(color2.slice(1), 16);
@@ -168,6 +209,11 @@ function lerpColor(color1, color2, t) {
 /*    Draw Functions    */
 /*                      */
 /** **********************/
+/**
+ * Draws a circle at the point provided
+ *
+ * @param {Point} point
+ */
 function drawCircle(point) {
     const radius = 3;
     ctx.lineWidth = 1;
@@ -179,6 +225,13 @@ function drawCircle(point) {
     ctx.fill();
     ctx.stroke();
 }
+/**
+ * Draws a line from point1 to point2 in the color provided
+ *
+ * @param {Point} p1
+ * @param {Point} p2
+ * @param {RGBColorString} color
+ */
 function drawLine(p1, p2, color) {
     ctx.lineWidth = 0.8;
     // ctx.lineCap = "round";
@@ -188,6 +241,14 @@ function drawLine(p1, p2, color) {
     ctx.lineTo(p2.pos[X], p2.pos[Y]);
     ctx.stroke();
 }
+/**
+ * Creates a triangle given the 3 points provided
+ *
+ * @param {Point} p1
+ * @param {Point} p2
+ * @param {Point} p3
+ * @return {HEXColorString}
+ */
 function drawTriangle(p1, p2, p3) {
     const cx = (p1.pos[X] + p2.pos[X] + p3.pos[X]) / 3;
     const cy = (p1.pos[Y] + p2.pos[Y] + p3.pos[Y]) / 3;
@@ -218,9 +279,11 @@ function randomInt(min, max) {
 function main() {
     const body = document.querySelector("body");
     const bodySize = [body.clientWidth, body.clientHeight];
+    // Set the canvas size to be the size of the page
     canvas.width = bodySize[X];
     canvas.height = bodySize[Y];
     const points = [];
+    // Make a bunch of points outside of bounds, with 0 velocity
     const topLeft = { pos: [-border, -border], vec: [0, 0], id: 0 };
     const topMiddle = { pos: [bodySize[X] / 2, -border], vec: [0, 0], id: 1 };
     const topRight = { pos: [bodySize[X] + border, -border], vec: [0, 0], id: 2 };
@@ -229,9 +292,11 @@ function main() {
     const bottomLeft = { pos: [-border, bodySize[Y]], vec: [0, 0], id: 5 };
     const bottomMiddle = { pos: [bodySize[X] / 2, -border], vec: [0, 0], id: 6 };
     const bottomRight = { pos: [bodySize[X] + border, bodySize[Y] + border], vec: [0, 0], id: 7 };
+    // Add em all in, so that the moving points can connect to em
     points.push(topLeft, topMiddle, topRight, middleLeft, middleRight, bottomLeft, bottomMiddle, bottomRight);
     const min = [-border, -border];
     const max = [bodySize[X] + border, bodySize[Y] + border];
+    // Generate random points, with random velocities, then randomise their speed a smidge
     for (let i = 0; i < maxPoints; i++) {
         const xPos = randomInt(min[X], max[X]);
         const yPos = randomInt(min[Y], max[Y]);
@@ -248,6 +313,7 @@ function main() {
         const point = { pos: [xPos, yPos], vec: normalised, id: i };
         points.push(point);
     }
+    /* Debug Stuff */
     // const triangles = delaunay(points);
     // console.log("Points:");
     // console.log(points);
@@ -257,8 +323,10 @@ function main() {
     // console.log(triangles[0]);
     // console.log("Point:");
     // console.log(triangles[0][0]);
+    // The main "loop"
     setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear
+        // Move the points
         for (const point of points) {
             if (isNaN(point.pos[X]))
                 throw `Number is NaN - ${point.pos[X]}`;
@@ -267,13 +335,14 @@ function main() {
             point.pos[X] = wrap(newX, min[X], max[X]);
             point.pos[Y] = wrap(newY, min[Y], max[Y]);
         }
-        // const triangles = delaunay([...points.map(x => x.pos)]);
+        // Get the triangles & draw them
         const triangles = delaunay(points);
         for (const triangle of triangles) {
             const point1 = triangle[0];
             const point2 = triangle[1];
             const point3 = triangle[2];
             const color = drawTriangle(point1, point2, point3);
+            // Draw some lines along the edges
             drawLine(point1, point2, color);
             drawLine(point2, point3, color);
             drawLine(point1, point3, color);

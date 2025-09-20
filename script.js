@@ -7,7 +7,7 @@ const border = 200;
 const X = 0;
 const Y = 1;
 
-const SPEED = 1;
+const SPEED = 0.3;
 
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvas");
@@ -224,6 +224,12 @@ function drawLine(p1, p2){
 }
 
 
+/**
+ * Draws a line from p1 to p2
+ * @param {number[]} p1
+ * @param {number[]} p2
+ * @param {number[]} p3
+*/
 function drawTriangle(p1, p2, p3){
 	ctx.lineWidth = 0;
 	ctx.lineCap = "round";
@@ -235,8 +241,6 @@ function drawTriangle(p1, p2, p3){
 	ctx.lineTo(p2[X], p2[Y]);
 	ctx.lineTo(p3[X], p3[Y]);
 	ctx.fill();
-
-
 }
 
 
@@ -279,22 +283,16 @@ async function main(){
 	/** @type {Point[]} */
 	const points = [];
 
+	const topLeft = { pos: [-border, -border], vec: [0, 0], id: 0 };
+	const topMiddle = { pos: [bodyWidth / 2, -border], vec: [0, 0], id: 1 };
+	const topRight = { pos: [bodyWidth + border, -border], vec: [0, 0], id: 2 };
 
-	ctx.lineWidth = 1;
-	ctx.lineCap = "round";
-	ctx.strokeStyle = "white";
+	const middleLeft = { pos: [-border, bodyHeight / 2], vec: [0, 0], id: 3 };
+	const middleRight = { pos: [bodyWidth + border, bodyHeight / 2], vec: [0, 0], id: 4 };
 
-
-	const topLeft = { pos: [-border, -border], vec: [0, 0] };
-	const topMiddle = { pos: [bodyWidth / 2, -border], vec: [0, 0] };
-	const topRight = { pos: [bodyWidth + border, -border], vec: [0, 0] };
-
-	const middleLeft = { pos: [-border, bodyHeight / 2], vec: [0, 0] };
-	const middleRight = { pos: [bodyWidth + border, bodyHeight / 2], vec: [0, 0] };
-
-	const bottomLeft = { pos: [-border, -border], vec: [0, 0] };
-	const bottomMiddle = { pos: [bodyWidth / 2, -border], vec: [0, 0] };
-	const bottomRight = { pos: [bodyWidth + border, bodyHeight + border], vec: [0, 0] };
+	const bottomLeft = { pos: [-border, -border], vec: [0, 0], id: 5 };
+	const bottomMiddle = { pos: [bodyWidth / 2, -border], vec: [0, 0], id: 6 };
+	const bottomRight = { pos: [bodyWidth + border, bodyHeight + border], vec: [0, 0], id: 7 };
 
 	points.push(topLeft, topMiddle, topRight, middleLeft, middleRight, bottomLeft, bottomMiddle, bottomRight);
 
@@ -305,21 +303,35 @@ async function main(){
 		const xPos = randomInt(min[X], max[X]);
 		const yPos = randomInt(min[Y], max[Y]);
 
-		const xVel = randomInt(-1, 1);
-		const yVel = randomInt(-1, 1);
+		let xVel = 0;
+		let yVel = 0;
+
+		while(xVel + yVel === 0){
+			xVel = randomInt(-360, 360);
+			yVel = randomInt(-360, 360);
+		}
 
 		const normalised = normalise([xVel, yVel]);
-		const point = { pos: [xPos, yPos], vec: normalised };
+		const point = { pos: [xPos, yPos], vec: normalised, id: i };
 
 		points.push(point);
 	}
 
 
+	// const triangles = delaunay(points);
+
+	// console.log("Triangles:");
+	// console.log(triangles);
+	// console.log("Triangle:");
+	// console.log(triangles[0]);
+	// console.log("Point:");
+	// console.log(triangles[0][0]);
+
 	setInterval(() => {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		for(const point of points){
-			if(isNaN(point.pos[X])) throw `number is NaN - point.Number`;
+			if(isNaN(point.pos[X])) throw `Number is NaN - ${point.pos[X]}`;
 
 			const newX = point.pos[X] + (point.vec[X] * SPEED);
 			const newY = point.pos[Y] + (point.vec[Y] * SPEED);
@@ -328,15 +340,19 @@ async function main(){
 		}
 
 
-		const tri = delaunay([...points.map(x => x.pos)]);
+		const triangles = delaunay([...points.map(x => x.pos)]);
+		// const triangles = delaunay(points);
 		let index = 0;
-		for(const triangle of tri){
+		for(const triangle of triangles){
+			const point1 = triangle[0];
+			const point2 = triangle[1];
+			const point3 = triangle[2];
 			// drawTriangle(triangle[0], triangle[1], triangle[2]);
 			index += 1;
 
-			drawLine(triangle[0], triangle[1]);
-			drawLine(triangle[1], triangle[2]);
-			drawLine(triangle[0], triangle[2]);
+			drawLine(point1, point2);
+			drawLine(point2, point3);
+			drawLine(point1, point3);
 
 		}
 
@@ -344,7 +360,7 @@ async function main(){
 			drawCircle(point.pos);
 		}
 
-	}, 16);
+	}, 10);
 }
 
 main();

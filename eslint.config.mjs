@@ -7,7 +7,7 @@ import stylistic from "@stylistic/eslint-plugin";
 
 export default defineConfig([
 	{
-		files: ["**/*.{js,mjs,cjs,jsx}"],
+		files: ["**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"],
 		plugins: {
 			js,
 			'@stylistic': stylistic
@@ -22,7 +22,7 @@ export default defineConfig([
 				}
 			}
 		},
-		extends: ["js/recommended"],
+		extends: ["ts/recommended"],
 		rules: {
 			"@stylistic/brace-style": ["error", "1tbs", { "allowSingleLine": false }],
 			"use-isnan": "error",

@@ -24,6 +24,7 @@ html {
 }
 
 body {
+	background-color: #555;
 	color: white;
 	font-family: Arial, sans-serif;
 	height: 100%;

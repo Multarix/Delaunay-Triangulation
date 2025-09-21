@@ -114,7 +114,7 @@ declare function drawLine(p1: Point, p2: Point, color: RGBColorString): void;
  * @param {Point} p3
  * @return {HEXColorString}
  */
-declare function drawTriangle(p1: Point, p2: Point, p3: Point): RGBColorString;
+declare function drawTriangle(p1: Point, p2: Point, p3: Point, color: RGBColorString): void;
 /**
  * Generate a random int from min to max
  *

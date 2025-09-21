@@ -233,8 +233,7 @@ function drawCircle(point) {
  * @param {RGBColorString} color
  */
 function drawLine(p1, p2, color) {
-    ctx.lineWidth = 0.8;
-    // ctx.lineCap = "round";
+    ctx.lineWidth = 1.5;
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.moveTo(p1.pos[X], p1.pos[Y]);
@@ -249,12 +248,8 @@ function drawLine(p1, p2, color) {
  * @param {Point} p3
  * @return {HEXColorString}
  */
-function drawTriangle(p1, p2, p3) {
-    const cx = (p1.pos[X] + p2.pos[X] + p3.pos[X]) / 3;
-    const cy = (p1.pos[Y] + p2.pos[Y] + p3.pos[Y]) / 3;
-    const t = ((cx / screenWidth) + (cy / screenHeight)) / 2;
-    const color = lerpColor(TOP_LEFT_COLOR, BOT_RIGHT_COLOR, t);
-    ctx.lineWidth = 3;
+function drawTriangle(p1, p2, p3, color) {
+    ctx.lineWidth = 1;
     ctx.lineCap = "round";
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
@@ -264,7 +259,6 @@ function drawTriangle(p1, p2, p3) {
     ctx.lineTo(p3.pos[X], p3.pos[Y]);
     ctx.closePath();
     ctx.fill();
-    return color;
 }
 /**
  * Generate a random int from min to max
@@ -341,11 +335,15 @@ function main() {
             const point1 = triangle[0];
             const point2 = triangle[1];
             const point3 = triangle[2];
-            const color = drawTriangle(point1, point2, point3);
+            const cx = (point1.pos[X] + point2.pos[X] + point3.pos[X]) / 3;
+            const cy = (point1.pos[Y] + point2.pos[Y] + point3.pos[Y]) / 3;
+            const t = ((cx / screenWidth) + (cy / screenHeight)) / 2;
+            const color = lerpColor(TOP_LEFT_COLOR, BOT_RIGHT_COLOR, t);
             // Draw some lines along the edges
             drawLine(point1, point2, color);
             drawLine(point2, point3, color);
             drawLine(point1, point3, color);
+            drawTriangle(point1, point2, point3, color);
         }
         // for(const point of points){
         // 	drawCircle(point);

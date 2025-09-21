@@ -233,7 +233,7 @@ function drawCircle(point) {
  * @param {RGBColorString} color
  */
 function drawLine(p1, p2, color) {
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 1.2;
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.moveTo(p1.pos[X], p1.pos[Y]);
@@ -249,9 +249,8 @@ function drawLine(p1, p2, color) {
  * @return {HEXColorString}
  */
 function drawTriangle(p1, p2, p3, color) {
-    ctx.lineWidth = 1;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = color;
+    ctx.lineWidth = 0;
+    ctx.strokeStyle = "none";
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.moveTo(p1.pos[X], p1.pos[Y]);

@@ -366,7 +366,7 @@ function main(){
 	const middleRight: Point = { pos: [bodySize[X] + border, bodySize[Y] / 2], vec: [0, 0], id: 4 };
 
 	const bottomLeft: Point = { pos: [-border, bodySize[Y]], vec: [0, 0], id: 5 };
-	const bottomMiddle: Point = { pos: [bodySize[X] / 2, -border], vec: [0, 0], id: 6 };
+	const bottomMiddle: Point = { pos: [bodySize[X] / 2, bodySize[Y] + border], vec: [0, 0], id: 6 };
 	const bottomRight: Point = { pos: [bodySize[X] + border, bodySize[Y] + border], vec: [0, 0], id: 7 };
 	
 	// Add em all in, so that the moving points can connect to em

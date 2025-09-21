@@ -283,7 +283,7 @@ function main() {
     const middleLeft = { pos: [-border, bodySize[Y] / 2], vec: [0, 0], id: 3 };
     const middleRight = { pos: [bodySize[X] + border, bodySize[Y] / 2], vec: [0, 0], id: 4 };
     const bottomLeft = { pos: [-border, bodySize[Y]], vec: [0, 0], id: 5 };
-    const bottomMiddle = { pos: [bodySize[X] / 2, -border], vec: [0, 0], id: 6 };
+    const bottomMiddle = { pos: [bodySize[X] / 2, bodySize[Y] + border], vec: [0, 0], id: 6 };
     const bottomRight = { pos: [bodySize[X] + border, bodySize[Y] + border], vec: [0, 0], id: 7 };
     // Add em all in, so that the moving points can connect to em
     points.push(topLeft, topMiddle, topRight, middleLeft, middleRight, bottomLeft, bottomMiddle, bottomRight);

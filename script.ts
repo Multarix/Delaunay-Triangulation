@@ -1,37 +1,3 @@
-const screenWidth = document.documentElement.clientWidth;
-const screenHeight = document.documentElement.clientHeight;
-
-const maxPoints = 100;
-const border = 200;
-
-const X = 0;
-const Y = 1;
-
-const SPEED = 0.05;
-
-/* Green */
-const TOP_LEFT_COLOR = "#B8FFBF";
-const BOT_RIGHT_COLOR = "#004707";
-
-/* Hot Pink -> Purple */
-// const TOP_LEFT_COLOR = "#ff3f81";
-// const BOT_RIGHT_COLOR = "#23153c";
-
-/* Blue */
-// const TOP_LEFT_COLOR = "#B3E9FF";
-// const BOT_RIGHT_COLOR = "#0075A3";
-
-/* Red */
-// const TOP_LEFT_COLOR = "#FFB3B3";
-// const BOT_RIGHT_COLOR = "#A30000";
-
-/* Yellow */
-// const TOP_LEFT_COLOR = "#FFF2B3";
-// const BOT_RIGHT_COLOR = "#A38800";
-
-const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-
 type Vector = [number, number];
 
 interface Point {
@@ -51,6 +17,69 @@ interface Circle {
 	y: number,
 	r: number
 }
+
+
+const screenWidth = document.documentElement.clientWidth;
+const screenHeight = document.documentElement.clientHeight;
+
+const maxPoints = randomInt(100, 400);
+const SPEED = randomInt(3, 7) / 100;
+console.log(`Chose ${maxPoints} total points!`)
+console.log(`Chose ${SPEED} base speed!`)
+
+
+const border = 200;
+
+const X = 0;
+const Y = 1;
+
+
+
+const randomColorBlend = [
+	[	// Green
+		"#B8FFBF" as HEXColorString,
+		"#004707" as HEXColorString,
+	],
+	[	// Blue
+		"#d2f1ff" as HEXColorString,
+		"#006a93" as HEXColorString,
+	],
+	[	// Red
+		"#FFB3B3" as HEXColorString,
+		"#A30000" as HEXColorString,
+	],
+	[	// Yellow
+		"#FFF2B3" as HEXColorString,
+		"#A38800" as HEXColorString,
+	],
+	[	// Orange -> Blue
+		"#ff6928" as HEXColorString,
+		"#212cad" as HEXColorString,
+	],
+	[	// Green -> Blue
+		"#00FF00" as HEXColorString,
+		"#0017AA" as HEXColorString,
+	],
+	[	// Yellow -> Pink
+		"#FFFF00" as HEXColorString,
+		"#800090" as HEXColorString,
+	],
+	[	// Hot Pink -> Purple
+		"#FF3F81" as HEXColorString,
+		"#23153C" as HEXColorString,
+	],
+]
+
+const ColorCombo = randomInt(0, randomColorBlend.length - 1);
+
+/* Yellow */
+const TOP_LEFT_COLOR = randomColorBlend[ColorCombo][0];
+const BOT_RIGHT_COLOR = randomColorBlend[ColorCombo][1];
+
+const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
+const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
+
 
 
 /**

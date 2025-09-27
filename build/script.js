@@ -1,26 +1,51 @@
 "use strict";
 const screenWidth = document.documentElement.clientWidth;
 const screenHeight = document.documentElement.clientHeight;
-const maxPoints = 100;
+const maxPoints = randomInt(100, 400);
+const SPEED = randomInt(3, 7) / 100;
+console.log(`Chose ${maxPoints} total points!`);
+console.log(`Chose ${SPEED} base speed!`);
 const border = 200;
 const X = 0;
 const Y = 1;
-const SPEED = 0.05;
-/* Green */
-const TOP_LEFT_COLOR = "#B8FFBF";
-const BOT_RIGHT_COLOR = "#004707";
-/* Hot Pink -> Purple */
-// const TOP_LEFT_COLOR = "#ff3f81";
-// const BOT_RIGHT_COLOR = "#23153c";
-/* Blue */
-// const TOP_LEFT_COLOR = "#B3E9FF";
-// const BOT_RIGHT_COLOR = "#0075A3";
-/* Red */
-// const TOP_LEFT_COLOR = "#FFB3B3";
-// const BOT_RIGHT_COLOR = "#A30000";
+const randomColorBlend = [
+    [
+        "#B8FFBF",
+        "#004707",
+    ],
+    [
+        "#d2f1ff",
+        "#006a93",
+    ],
+    [
+        "#FFB3B3",
+        "#A30000",
+    ],
+    [
+        "#FFF2B3",
+        "#A38800",
+    ],
+    [
+        "#ff6928",
+        "#212cad",
+    ],
+    [
+        "#00FF00",
+        "#0017AA",
+    ],
+    [
+        "#FFFF00",
+        "#800090",
+    ],
+    [
+        "#FF3F81",
+        "#23153C",
+    ],
+];
+const ColorCombo = randomInt(0, randomColorBlend.length - 1);
 /* Yellow */
-// const TOP_LEFT_COLOR = "#FFF2B3";
-// const BOT_RIGHT_COLOR = "#A38800";
+const TOP_LEFT_COLOR = randomColorBlend[ColorCombo][0];
+const BOT_RIGHT_COLOR = randomColorBlend[ColorCombo][1];
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 /**

@@ -1,14 +1,3 @@
-declare const screenWidth: number;
-declare const screenHeight: number;
-declare const maxPoints = 100;
-declare const border = 200;
-declare const X = 0;
-declare const Y = 1;
-declare const SPEED = 0.05;
-declare const TOP_LEFT_COLOR = "#B8FFBF";
-declare const BOT_RIGHT_COLOR = "#004707";
-declare const canvas: HTMLCanvasElement;
-declare const ctx: CanvasRenderingContext2D;
 type Vector = [number, number];
 interface Point {
     pos: Vector;
@@ -24,6 +13,19 @@ interface Circle {
     y: number;
     r: number;
 }
+declare const screenWidth: number;
+declare const screenHeight: number;
+declare const maxPoints: number;
+declare const SPEED: number;
+declare const border = 200;
+declare const X = 0;
+declare const Y = 1;
+declare const randomColorBlend: `#${string}`[][];
+declare const ColorCombo: number;
+declare const TOP_LEFT_COLOR: `#${string}`;
+declare const BOT_RIGHT_COLOR: `#${string}`;
+declare const canvas: HTMLCanvasElement;
+declare const ctx: CanvasRenderingContext2D;
 /**
  * Creates a circle in the center of the given 3 points
  *
